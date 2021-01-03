@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="layouts/default">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/5.14.0/css/all.min.css}" >
+<link rel="stylesheet" th:href="@{/css/registry.css}">
+<link rel="icon" type="image/png" th:href="@{/img/favicon.ico}" />
+</head>
+<body>
+
+    
+  <div style="margin-top: 2%">
+  <div th:insert="fragments/header :: header"></div>
+  </div>
+  <div class="container bg-light">
+      <article class="card-body mx-auto" style="max-width: 400px; ">
+        <h4 class="card-title mt-3 text-center">Войти</h4>
+        <p>
+          <a href="#" class="btn btn-block btn-facebook"><i class="fab fa-google"></i>  Вход с Google</a>
+        </p>
+        <p class="divider-text">
+          <span class="bg-light">Или</span>
+        </p>
+        <form method="post" action="#" th:action="@{/user/login}" id="logimForm">
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-envelope"></i>
+              </span>
+            </div>
+            <input id="email" name="email" class="form-control" placeholder="Email адрес" type="email" required="required">
+          </div>
+          <!-- form-group end.// -->
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i>
+              </span>
+            </div>
+            <input name="password" class="form-control" placeholder="Пароль" type="password" required="required">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Войти</button>
+          </div>
+          <p class="text-center">
+            Нет аккаунта? <a href="#" th:href="@{/user/registry}" >Зарегистрироватся</a>
+          </p>
+        </form>
+      </article>
+  </div>
+  <footer class="fixed-bottom">
+  <div th:replace="fragments/footer :: footer"></div>
+  </footer>
+  
+  <script type="text/javascript" th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/popper.js/1.14.7/popper.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
+  
+</body>
+</html>

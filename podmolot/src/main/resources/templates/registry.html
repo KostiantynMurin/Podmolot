@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="layouts/default">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/5.14.0/css/all.min.css}">
+<link rel="stylesheet" th:href="@{/css/registry.css}">
+<link rel="icon" type="image/png" th:href="@{/img/favicon.ico}" />
+<title>Registry</title>
+</head>
+<body>
+<div style="margin-top: 2%">
+  <div th:insert="fragments/header :: header"></div>
+  </div>
+  <div class="container bg-light">
+    <article class="card-body mx-auto" style="max-width: 400px;">
+      <h4 class="card-title mt-3 text-center">Создать аккаунт</h4>
+      <p class="text-center">Присоединяйся к нам, с нами зарабатывают</p>
+      <p>
+        <a href="#" class="btn btn-block btn-facebook"><i class="fab fa-google"></i> Вход с Google</a>
+      </p>
+      <p class="divider-text">
+        <span class="bg-light">Или</span>
+      </p>
+      <form method="post" action="#" th:action="@{/user/registry/save}" th:object="${userForm}" id="registryForm">
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fas fa-angle-right"></i>
+            </span>
+          </div>
+          <input th:field="*{firstName}" name="firstName" id="firstName" class="form-control" placeholder="Имя"
+            type="text" max="55" required="required">
+        </div>
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fas fa-angle-right"></i>
+            </span>
+          </div>
+          <input th:field="*{lastName}" name="lastName" id="lastName" class="form-control" placeholder="Фамилия"
+            type="text" max="55">
+        </div>
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fas fa-angle-right"></i>
+            </span>
+          </div>
+          <input th:field="*{middleName}" name="middleName" id="middleName" class="form-control" placeholder="Отчество"
+            type="text" max="55">
+        </div>
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-envelope"></i>
+            </span>
+          </div>
+          <input th:field="*{email}" id="email" name="email" class="form-control" placeholder="Email адрес" type="email"
+            required="required">
+        </div>
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-phone"></i>
+            </span>
+          </div>
+          <input th:field="*{phoneNumber}" id="phoneNumber" name="phoneNumber" class="form-control"
+            placeholder="Номер телефона" type="text" value="+380">
+        </div>
+        <!-- form-group end.// -->
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-lock"></i>
+            </span>
+          </div>
+          <input th:field="*{password}" name="password" class="form-control" placeholder="Пароль" type="password"
+            required="required">
+        </div>
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-lock"></i>
+            </span>
+          </div>
+          <input th:field="*{passwordCopy}" name="reapetPassword" class="form-control" placeholder="Повторите пароль"
+            type="password" required="required">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block">Создать аккаунт</button>
+        </div>
+        <p class="text-center">
+          Уже имете аккаунт? <a href="#" th:href="@{/user/login}">Войти</a>
+        </p>
+      </form>
+    </article>
+  </div>
+  <script type="text/javascript" th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/popper.js/1.14.7/popper.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
+  <!-- <script type="text/javascript" th:src="@{/js/registry.js}"></script> -->
+  <footer class="fixed-bottom">
+  <div th:replace="fragments/footer :: footer"></div>
+  </footer>
+</body>
+</html>

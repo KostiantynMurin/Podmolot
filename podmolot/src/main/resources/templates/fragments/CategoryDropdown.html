@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="layouts/default">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+  <div th:fragment="CategoryDropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+      aria-expanded="false"> Выбор категории </a>
+
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+      <li class="dropdown-submenu" th:each="entry : ${categoryes}">
+             <a class="dropdown-item dropdown-toggle" href="#" th:text="${entry.key.name}">Категория</a>
+
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#" th:each="entry : ${entry.value}" th:text="${entry.name}">Подкатегория</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

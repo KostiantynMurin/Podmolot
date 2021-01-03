@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="layouts/default">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="icon" type="image/png" th:href="@{img/favicon.ico}" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/5.14.0/css/all.min.css}">
+<link rel="stylesheet" th:href="@{/css/userSettings.css}">
+<script type="text/javascript" th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/popper.js/1.14.7/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
+
+
+<style type="text/css">
+a {
+	text-decoration: none;
+	color: green;
+}
+
+a:hover {
+	color: red;
+}
+
+#active_li {
+	background-color: #F7F7F7;
+}
+</style>
+
+</head>
+<body>
+
+  <div style="margin-top: 5%">
+    <div th:insert="fragments/header :: header"></div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row">
+
+      <!-- Account Sidebar-->
+      <div th:replace="fragments/authorCard :: author-card"></div>
+
+      <!-- Profile Settings-->
+      <div class="col-lg-4 pb-5">
+        <form id="accordionExample" method="post" action="#" th:action="@{/user/profile/userCategory}"
+          th:object="${user}">
+
+          <!-- <div class="col-md-4 mt-5"> -->
+          <!--Выпадающие списки подкатегорий с чекбоксами   -->
+
+
+          <div class="accordion">
+            <!-- <input type="hidden" th:field="*{id}">
+          <input type="hidden" th:field="*{firstName}"> -->
+
+            <div class="card">
+              <div class="card-header" id="headingOne" th:each="entry, iStat : ${categoryes}">
+                <h5 class="mb-0 ">
+                  <button class="btn btn-link fas fa-angle-down" style="text-decoration: none"
+                    th:attr="data-target='#accordion_'+${iStat.count}" type="button" data-toggle="collapse"
+                    th:text="' '+ ${entry.key.name}" aria-controls="'accordion_'+${iStat.count}">Разворачиваемая
+                    панель</button>
+                </h5>
+                <div th:id="'accordion_'+${iStat.count}" class="collapse" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <!-- <div class="card-body" th:each="entry2 : ${entry.value}">
+                  <input type="checkbox" th:value="${entry2.id}"  th:text="${entry2.name}" th:field="*{categories}"></input>
+                </div> -->
+                  <div class="card-body" th:each="entry2 : ${entry.value}">
+                    <input type="checkbox" name="checkboxcategories" th:value="${entry2.id}"></input>
+                    <label th:text="${entry2.name}"></label>
+                    <p></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="result"></div>
+            <input type="button" onclick="GetSelection()" value="Get Selected" />
+            <button class="btn btn-style-1 btn-primary" type="submit" data-toast="" data-toast-position="topRight"
+              data-toast-type="success" data-toast-icon="fe-icon-check-circle" data-toast-title="Success!"
+              data-toast-message="Your profile updated successfuly.">Обновить профиль</button>
+          </div>
+        </form>
+      </div>
+
+
+      <!--Список категорий данного пользователя  -->
+      <div class="col-lg-4 pb-5">
+        <h5 style="text-align: center">Выбраные категории</h5>
+        <ul class="list-group  " id="li_my_categories" th:each="myCategories : ${myCategories}">
+          <li class="list-group-item " id="active_li"><span th:text="' '+ ${myCategories.key.name}"> Cras
+              justo odio</span></li>
+          <li class="list-group-item "  th:each="myCategoriesChild : ${myCategories.value}"><a
+            class="far fa-window-close" id="del_category" style="text-decoration: none"></a><span th:text="' '+ ${myCategoriesChild.name}">
+              Cras justo odio</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <div th:replace="fragments/footer :: footer"></div>
+  <script type="text/javascript">
+			/* $("input").on("click", function () {
+			var $input = $( this );
+			$("p").html("checked " + $input.is(":checked") + " id = " + $( "input:checked" ).val());
+			var formData = $('#accordionExample').serialize();
+			console.log('Posting the following: ', formData);
+			}).change();
+
+			function GetSelection() {
+			   var allVals = [];
+			   $('.categories:checked').each(function () {
+			       debugger;
+			       allVals.push($(this).val());
+			   });
+			   $("#result").text("Selected Values: " + allVals);
+			}
+
+			$.ajax({
+			   url: '/user/profile/userCategory',
+			   data: formData,
+			   type: 'post',
+			   dataType: 'json',
+			   success: function(data) {
+			     //  ... do something with the data...
+			   }
+			 }); */
+
+			/* $("input").on("click", function(e) {
+				var $input = $(this);
+
+				if ($input.is(":checked")) {
+					var categoriesIds = $("input:checked").val();
+				} else {
+					var categoriesIds = null;
+				}
+				
+				
+
+				//var categoriesIds = $('#accordionExample').serialize();
+				console.log("выбраные чекбоксы " + categoriesIds);
+				$.ajax({
+					type : "POST",
+					contentType : 'application/json; charset=utf-8',
+					dataType : 'json',
+					url : "/user/profile/userCategory", //assuming your controller is configured to accept requests on this URL
+					data : JSON.stringify(categoriesIds), // This converts the payLoad to Json to pass along to Controller
+					success : function(data) {
+					}
+				});
+
+			}).change(); */
+			 
+			 
+			 $(document).ready ( function () {
+				
+				 $("#accordionExample").submit(function (event) {
+					event.preventDefault();
+					ajaxPost();
+				});
+				 
+				 $("input").on("click", function ajaxPost() {
+					 
+					 var $input = $(this);
+					 console.log("bla");
+						if ($input.is(":checked")) {
+							var categoriesIds = $("input:checked").val();
+						} else {
+							var categoriesIds = null;
+						}
+					 
+					 $.ajax({
+							type : "POST",
+							contentType : 'application/json; charset=utf-8',
+							dataType : 'json',
+							url : "/user/profile/userCategory", //assuming your controller is configured to accept requests on this URL
+							data : JSON.stringify(categoriesIds), // This converts the payLoad to Json to pass along to Controller
+							success : function(result) {
+								console.log(result.data);
+								if (result.status == "Done") {
+									alert("done");
+								}else {
+									alert("error");
+								}
+								console.log(result);
+							}
+						});
+				}
+			}).change();
+		</script>
+
+</body>
+</html>
